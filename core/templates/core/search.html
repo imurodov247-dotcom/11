@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="{% url 'search' %}">
+        <p>
+
+            
+        <label for="position">Position :</label>
+        <input type="text" value="{{ saved.position }}" name="position" id="position">
+
+        </p>
+      
+        <p>
+              <label for="min">Min :</label>
+            <input type="number" value="{{ saved.min }}" name="min" id="min">
+
+        </p>
+      
+        <p>
+            <label for="max">Max :</label>
+            <input type="number" value="{{ saved.max }}" name="max" id="max">
+
+        </p>
+       
+        <p>
+            <label for="city">City :</label>
+            <input type="text" name="city" value="{{ saved.city }}" id="city">
+
+        </p>
+       
+        <button type="submit">Qidirish</button>
+
+         {% for xodim  in xodimlar   %}   
+        
+            <h3>Xodim :{{xodim.id}} - {{xodim.name}}</h3>
+            <p>Yoshi:{{xodim.age}}</p>
+            <p>Lavozimi:{{xodim.position}} at {{xodim.department}}</p>
+            <p>Maoshi:{{xodim.salary}}</p>
+            <p>Shahri:{{xodim.city}}</p>
+            <p>Ishga kirgan sana :{{xodim.join_date}}</p>
+
+            
+
+        {% endfor %}
+        
+    </form>
+</body>
+</html>
