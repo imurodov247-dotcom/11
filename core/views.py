@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_list_or_404,get_object_or_404
 from .forms import XodimForm
 from .models import Xodim
 from decimal import Decimal
@@ -20,6 +20,7 @@ def create_xodim(request):
                 form.save()
                 return redirect("index")
         return render(request,"core/create.html", {"form": form})
+
 
 def search(request):
         pos = request.GET.get("position")
@@ -75,5 +76,27 @@ def stat(request):
     return render(request,"core/stats.html",{"stat": stat})
 
 
+def xodim(request,pk):
+    xodim = get_list_or_404(Xodim,pk=pk)
+    
+    
+    return render(request,'core/hodim.html',{'hodim':xodim})
      
-     
+def edit(request, pk):
+    xodim = get_object_or_404(Xodim, pk=pk)
+    if request.method == "POST":
+        form = XodimForm(request.POST, request.FILES, instance=xodim)
+        if form.is_valid():
+            form.save()
+            return redirect("index")
+    else:
+        form = XodimForm(instance=xodim)
+
+    return render(request, "core/edit.html", {"form": form, "xodim": xodim})
+
+def delete(request,pk):
+    xodim = get_object_or_404(Xodim,pk=pk)
+    if request.method == "POST":
+        xodim.delete()
+        return redirect("index")
+    return render (request,"core/delete.html",{"xodim":xodim})        
